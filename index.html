@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotating Gallery</title>
+</head>
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0.877);
+    }
+
+    .image-container {
+        width: 300px;
+        height: 200px;
+        transform-style: preserve-3d;
+        transform: perspective(1000px) rotateY(0deg);
+        position: relative;
+        transition: transform .7s;
+    }
+
+    .image-container span {
+        width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: rotateY(calc(var(--i)*45deg)) translateZ(450px);
+    }
+
+    .image-container span img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        box-shadow: 0px 0px 7px rgba(255, 255, 255, 0.679);
+    }
+
+    .btn-container {
+        position: relative;
+        width: 80%;
+    }
+
+    .btn {
+        position: absolute;
+        bottom: -150px;
+        background: slateblue;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        padding: 10px 40px;
+        cursor: pointer;
+        font-family: cursive;
+        box-shadow: 2px 3px 4px slateblue;
+    }
+
+    .btn:hover {
+        transform: scale(1.2);
+    }
+
+    #prev {
+        left: 20%;
+    }
+
+    #next {
+        right: 20%;
+    }
+</style>
+
+<body>
+
+    <div class="image-container">
+        <span style="--i: 1"><img
+                src="https://images.wallpaperscraft.ru/image/single/mashina_seryj_mokryj_147750_1280x720.jpg"
+                alt="image" width="350"></span>
+        <span style="--i: 2"><img
+                src="https://images.wallpaperscraft.ru/image/single/devushka_pirsing_kuhnia_1168092_1280x720.jpg"
+                alt="image" width="350"></span>
+        <span style="--i: 3"><img
+                src="https://images.wallpaperscraft.ru/image/single/mashina_sportkar_neon_157154_1280x720.jpg"
+                alt="image" width="350"></span>
+        <span style="--i: 4"><img
+                src="https://images.wallpaperscraft.ru/image/single/devushka_sviter_provoda_1059760_1280x720.jpg"
+                alt="image" width="350"></span>
+        <span style="--i: 5"><img
+                src="https://images.wallpaperscraft.ru/image/single/avtomobil_palmy_solntse_802812_1280x720.jpg"
+                alt="image" width="350"></span>
+        <span style="--i: 6"><img
+                src="https://images.wallpaperscraft.ru/image/single/derevo_abstraktsiia_svet_92069_1280x720.jpg"
+                alt="image" width="350"></span>
+        <span style="--i: 7"><img
+                src="https://images.wallpaperscraft.ru/image/single/devushka_siluet_planeta_1067694_1280x720.jpg"
+                alt="image" width="350"></span>
+        <span style="--i: 8"><img
+                src="https://images.wallpaperscraft.ru/image/single/eskalator_metro_stantsiia_199634_1280x720.jpg"
+                alt="image" width="350"></span>
+    </div>
+
+    <div class="btn-container">
+        <button class="btn" id="prev">
+            Prev
+        </button>
+        <button class="btn" id="next">
+            Next
+        </button>
+    </div>
+    
+    <script>
+
+    const container = document.querySelector('.image-container');
+    const nextBtn = document.querySelector('#next');
+    const prevBtn = document.querySelector('#prev');
+
+    let x = 0;
+    let timer;
+    
+    prevBtn.addEventListener('click', () => {
+
+        x -= 45;
+
+        clearTimeout(timer);
+        
+        autoRotate();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        
+        x += 45;
+
+        clearTimeout(timer);
+        
+        autoRotate();
+    });
+
+    function autoRotate() {
+        
+        container.style.transform = `perspective(1000px) rotateY(${x}deg)`;
+
+         timer = setTimeout(() => {
+            x = x + 45;
+            console.log(x);
+
+            autoRotate();
+        }, 4000);
+
+    }    
+
+    autoRotate();
+
+    
+    </script>
+</body>
+
+</html>
